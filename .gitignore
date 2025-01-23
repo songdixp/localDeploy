@@ -1,12 +1,25 @@
-
-# dir 不需要提交的目录
-/node_modules
-
-# file 不需要提交的文件
-config.ini
-
 # log 不需要提交的任意包含后缀名为log的文件
 *.log
 
 # Package Files 不需要提交的任意包含后缀名为jar的文件
 *.jar
+
+node_modules
+.env
+
+# Hardhat files 不需要提交的文件夹
+/cache
+/artifacts
+
+# TypeChain files
+/typechain
+/typechain-types
+
+# solidity-coverage files
+/coverage
+/coverage.json
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337
+
+
