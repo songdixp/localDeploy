@@ -1,0 +1,13 @@
+npx 命令，是执行 node_modules/bin模块下面的对应的脚本，如 hardhat ，一般会选择 js 或者ts去做开发
+
+hardhat 项目构造
+contracts 放置 solidity的合约文件，和remix 上面看到的差不多
+
+编译器的版本配置 hardhat.config.js 也可以去官网看配置项，如手动挖矿或者部署到x合约网络，官网都有写
+
+
+ignition 是部署某个合约脚本到本地网络，一般是自己编写脚本
+
+test是单元测试使用，hardhat 框架会自动执行脚本文件
+
+yarn.lock 使用yarn依赖包安装的文件，不需要管
