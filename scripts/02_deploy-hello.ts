@@ -4,6 +4,18 @@ import "@nomicfoundation/hardhat-ethers";
 // 在 hardhat环境中，引入ehters对象，导入之后可以直接进行 ethers. 来使用对应的工具API
 import {ethers} from "hardhat";
 
+/*
+本节讲解，如何写一个把合约部署到链上
+
+1 写一个部署脚本，创建 script文件夹
+2 编写部署代码
+3 增加调用合约的方法代码
+4 终端中测试命令，部署到本地网络
+5 没有网络先要本地构建网络
+6 重新执行部署本地网络的命令 
+7 查看本地链上发生了什么事情 
+*/ 
+
 async function deploy() {
     const HW  = await ethers.getContractFactory("HelloWorld");
     const hw = await HW.deploy();
@@ -23,15 +35,15 @@ deploy().then(sayHello)
 
 // 终端中执行命令来部署合约到某一个网络
 // 
-// npx hardhat run ./scripts/deploy-hello.ts --network localhost  localhost 可以指定任意的目标网络 rinkeby 或者以太坊主网 都是这种形式
+// npx hardhat run ./scripts/deploy-hello.ts --network localhost  localhost 可以指定任意的目标网络 rinkeby（测试网络） 或者以太坊主网 都是这种形式
 // HardhatError: HH108: Cannot connect to the network localhost.
 // 本地没有区块链网络部署我们的合约，需要本地先构建网络
 /*
 和传统开发不一样的形式，
 npx hardhat node 来构建本地的区块链，rpc默认地址是http://127.0.0.1:8545/
-初始的情况下有20个默认账号，每个账号有1w eth，每次关闭网络重启的时候 账户和key的地址都不会变化，方便本地调试
+初始的情况下有20个默认账号，每个账号有1w eth，每次关闭网络重启的时候 账户（Account）和 Private Key 的地址都不会变化，方便本地调试
 然后重新执行部署命令
-➜  localDeploy git:(main) ✗ npx hardhat run ./scripts/deploy-hello.ts --network localhost
+➜  localDeploy git:(main) ✗ npx hardhat run ./scripts/02_deploy-hello.ts --network localhost
 Hello, World!
 
 以下是本地链上发生的事情
@@ -47,13 +59,16 @@ eth_sendTransaction
   Transaction:         0xc662bc1d9361b460a2b4fbe6e1da43249f3a27eabd9c98cee2d5af396edab251  交易地址
   From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266  钱包的地址，这里使用的是account0 msg.sender
   Value:               0 ETH
-  Gas used:            133169 of 30000000
-  Block #1:            0xd53e388d8fa3ec97957e7280dac2c676a5a7b722f8fa67d8bbbdb30c633a5c1f
+  Gas used:            133169 of 30000000  使用的 gas 费用
+  Block #1:            0xd53e388d8fa3ec97957e7280dac2c676a5a7b722f8fa67d8bbbdb30c633a5c1f  创建的区块，1，和 交易地址 的结构是一样的
 
+第二笔调用
 eth_getTransactionByHash
 eth_getTransactionReceipt
 eth_blockNumber
-eth_call
+eth_call 只有 Contract call From to 调用合约 HelloWorld 的 hello 方法，这个没有gas 使用费，因为 HelloWorld 合约的 hello 方法没有任何的状态改变
+          只是单纯的执行的方法 ，定义的也是 pure 方法
+          过程：将hello 方法提交到链上，链上执行计算将结果返回给前端，然后console.log出来
   Contract call:       HelloWorld#hello
   From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
   To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
@@ -61,6 +76,7 @@ eth_call
 
 
 /*
+node 本地链的账户 和 private key 信息
 Account #0: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 (10000 ETH)
 Private Key: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 
