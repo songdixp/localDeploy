@@ -12,7 +12,8 @@ describe("HelloWorld", function(){
         // 3.测试行为 test
         // 4.断言
         // 把编译好的合约添加到hw 变量中来，如何找到 helloworld 合约的？
-        // 通过/Users/sason/Code/vscode_3/localDeploy/artifacts/contracts 下面的 HelloWorld.json 中的合约信息，包含abi、bytescode deployedbytescode 等找到
+        // 通过/Users/sason/Code/vscode_3/localDeploy/artifacts/contracts 下面的 HelloWorld.json 中的合约信息，
+        // 包含abi、bytescode deployedbytescode 等找到
         // deployedbytescode 我们的合约通过编译，会使用二进制代码去部署到以太坊的虚拟机上（中间过程）而不是通过源码的方式来进行部署
         // 拿到的不是文件名称，而是命名的合约名称
         const HW = await ethers.getContractFactory("HelloWorld");

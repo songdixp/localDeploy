@@ -1,7 +1,10 @@
 // 入口文件
 //  和小狐狸钱包进行交互
+// 这里有人喜欢使用 hardhat，因为也提供ethers工具，但是这里会报错，因为index.ts的执行环境是浏览器
+// hardhat又是在nodejs环境下的工具，浏览器里面引用hardhat就会执行不了
 import {ethers} from "ethers";
 
+// src 是前端的内容，scripts 和 contracts 是后端合约的内容，要做好区分
 
 // 我们会在浏览器运行js，那么首先判断浏览器中是否存在小狐狸插件，注入到浏览器全局变量中
 function getEth(){
